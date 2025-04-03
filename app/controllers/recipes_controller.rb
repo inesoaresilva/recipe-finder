@@ -2,9 +2,9 @@ class RecipesController < ApplicationController
   def search
     query = params[:query]
     if query.present?
-      @recipes = Recipe.search_by_title_and_ingredients(query)
+      @recipes = Recipe.includes(:ingredients).search_by_title_and_ingredients(query)
     else
-      @recipes = Recipe.all
+      @recipes = Recipe.includes(:ingredients).all
     end
 
     render json: @recipes, include: :ingredients
