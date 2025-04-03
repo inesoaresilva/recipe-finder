@@ -1,16 +1,16 @@
 namespace :import do
-    desc 'Import recipes from a JSON file'
+    desc "Import recipes from a JSON file"
 
     task recipes: :environment do
-        require 'json'
-        require 'set'
+        require "json"
+        require "set"
 
-        file_path = Rails.root.join('db', 'seeds' , 'recipes-en.json')
+        file_path = Rails.root.join("db", "seeds", "recipes-en.json")
 
         batch_size = 1000
 
         ActiveRecord::Base.transaction do
-            recipes_data = JSON.parse(File.read(file_path));
+            recipes_data = JSON.parse(File.read(file_path))
 
             recipe_batch = []
             ingredient_batch = []
@@ -20,7 +20,6 @@ namespace :import do
             puts "Importing recipes from #{file_path}..."
 
             recipes_data.each do |recipe_data|
-
                 recipe = {
                     title: recipe_data["title"],
                     cook_time: recipe_data["cook_time"],
@@ -51,9 +50,9 @@ namespace :import do
             existing_ingredients = Ingredient.pluck(:name).to_set
             ingredient_names.subtract(existing_ingredients)
             ingredient_names.each do |name|
-                ingredient_batch << {name: name}
+                ingredient_batch << { name: name }
 
-                if(ingredient_batch.size >= batch_size)
+                if ingredient_batch.size >= batch_size
                     Ingredient.insert_all(ingredient_batch)
                     ingredient_batch.clear
                 end
@@ -70,12 +69,12 @@ namespace :import do
                 recipe_data["ingredients"].each do |ingredient_name|
                     ingredient_id = ingredient_ids[ingredient_name]
 
-                    recipe_ingredients_batch << {recipe_id: recipe_id, ingredient_id: ingredient_id}
+                    recipe_ingredients_batch << { recipe_id: recipe_id, ingredient_id: ingredient_id }
 
                     if recipe_ingredients_batch.size >= batch_size
                         RecipeIngredient.insert_all(recipe_ingredients_batch)
                         recipe_ingredients_batch.clear
-                    end 
+                    end
                 end
             end
             RecipeIngredient.insert_all(recipe_ingredients_batch) unless recipe_ingredients_batch.empty?
