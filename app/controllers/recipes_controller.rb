@@ -1,4 +1,8 @@
 class RecipesController < ApplicationController
+  def index
+    # renders app/views/recipes/index.html.erb
+  end
+
   def search
     query = params[:query]
     if query.present?
