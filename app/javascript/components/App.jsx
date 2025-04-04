@@ -7,21 +7,27 @@ const App = () => {
     const [start, setStart] = useState(0); 
 
     const handleSearch = async (newQuery) => {
-        if (!newQuery.trim()) return;
+        const normalizedQuery = newQuery.
+        split(",").
+        map((ingredient) => ingredient.trim().toLowerCase())
+        .filter((i) => i.length > 0).
+        join(",");
 
-        setQuery(newQuery);  
+        setQuery(normalizedQuery);  
         setStart(0);         
         fetchRecipes(newQuery, 0, true);  
     };
 
     const fetchRecipes = async (query, start, reset = false) => {
         try {
-            const response = await fetch(`/recipes/search?query=${encodeURIComponent(query)}&start=${start}`);
+            const response = await fetch(`/recipes/search?ingredients=${encodeURIComponent(query)}&start=${start}`);
             if (!response.ok) throw new Error("Failed to fetch");
 
             const data = await response.json();
 
             const newRecipes = Object.values(data).flat();
+
+            console.log("Fetched recipes:", newRecipes);
 
             setRecipes((prevRecipes) => reset ? newRecipes : [...prevRecipes, ...newRecipes]);
         } catch (error) {
