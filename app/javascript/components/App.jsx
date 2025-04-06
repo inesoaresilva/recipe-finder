@@ -50,14 +50,22 @@ const App = () => {
             <h2 className="subtitle">Find Your Recipe 🔍</h2>
             <SearchBar query={query} setQuery={setQuery} onSearch={handleSearch} />
             {loading && <p className="loading">Loading recipes... 🍳</p>}
-            <ul>
-                {recipes.map((recipe) => (
-                    <li key={recipe.id}>
-                        <h2>{recipe.title}</h2>
-                    </li>
-                ))}
-            </ul>
-
+            
+            {recipes.map((recipe) => (
+                  <details key={recipe.id} className="recipe">
+                  <summary className="recipe-title">
+                    {recipe.title}
+                  </summary>
+                  <p className="recipe-description">
+                    🧑‍🍳 <strong>Prep:</strong> {recipe.prep_time} min &nbsp;&nbsp;
+                    🍲 <strong>Cook:</strong> {recipe.cook_time} min
+                </p>
+                  <ul className="ingredients-list">
+                    {recipe.ingredients.map((ingredient) => (
+                      <li key={ingredient.id}>{ingredient.name}</li>
+                    ))}
+                  </ul>
+                </details> ))}
             {recipes.length > 0 && (
                 <button onClick={loadMore}>Load More</button>
             )}

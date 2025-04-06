@@ -86,3 +86,33 @@ body {
     background-color: #4f46e5;
   }
   
+  .recipe {
+    margin-bottom: 1rem;
+    padding: 1rem;
+    border: 1px solid #ddd;
+    border-radius: 8px;
+    background: #fafafa;
+    box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+  }
+  
+  .recipe-title {
+    font-size: 1rem;
+    font-weight: bold;
+    cursor: pointer;
+    list-style: none;
+    padding: 0.5rem 0;
+  }
+
+  .recipe-title:hover {
+    color: #4f46e5;;
+  }
+
+  .recipe-description {
+    padding: 0 1rem;
+  }
+
+  .ingredients-list {
+    list-style-type: disc;
+    color: #555;
+  }
+  
