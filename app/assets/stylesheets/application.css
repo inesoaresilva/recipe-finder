@@ -57,7 +57,7 @@ body {
   .search-input {
     padding: 0.75rem 1rem;
     border: 1px solid #ddd;
-    border-radius: 9999px;
+    border-radius: 10px;
     font-size: 1rem;
     width: 100%;
     max-width: 500px;
@@ -139,3 +139,19 @@ body {
     color: #555;
   }
   
+  .load-button {
+    background-color: #6366f1;
+    font-size: 1rem;
+    color: white;
+    padding: 12px 24px;
+    border: none;
+    border-radius: 100px;
+    cursor: pointer;
+    margin: 20px auto;
+    display: block;
+    transition: background-color 0.2s;
+  }
+
+  .load-button:hover {
+    background-color: #4f46e5;
+  }

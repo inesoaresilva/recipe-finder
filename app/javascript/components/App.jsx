@@ -96,7 +96,7 @@ const App = () => {
                   </ul>
                 </details> ))}
             {recipes.length > 0 && (
-                <button onClick={loadMore}>Load More</button>
+                <button className="load-button" onClick={loadMore}>Load More</button>
             )}
         </div>
     );
