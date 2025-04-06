@@ -1,6 +1,6 @@
 import React from 'react';
 
-const SearchBar = ({query, setQuery, onSearch }) => {
+const SearchBar = ({query, setQuery, onSearch, placeholder }) => {
 
   const handleSearch = () => {
     if(!query) return;
@@ -16,7 +16,7 @@ const SearchBar = ({query, setQuery, onSearch }) => {
         type="text"
         value={query}
         onChange={(e) => setQuery(e.target.value)}
-        placeholder="Enter ingredients (e.g., egg, tomato, basil)"
+        placeholder={placeholder}
         onKeyDown={(e) => e.key === "Enter" && handleSearch()}
       />
       <button className='search-button' onClick={handleSearch}>Search</button>

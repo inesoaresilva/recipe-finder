@@ -10,13 +10,8 @@ const App = () => {
 
 
     const handleSearch = async (newQuery) => {
-        const normalizedQuery = newQuery.
-        split(",").
-        map((ingredient) => ingredient.trim().toLowerCase())
-        .filter((i) => i.length > 0).
-        join(",");
-
-        setQuery(normalizedQuery);  
+        setQuery(newQuery);  
+        setRecipes([]);
         setStart(0);         
         fetchRecipes(newQuery, 0, true);  
     };
@@ -59,7 +54,7 @@ const App = () => {
         <div>
             <h1 className="title">👩‍🍳 What’s on the menu today? 🍝 </h1>
             <h2 className="subtitle">Find Your Recipe 🔍</h2>
-            <SearchBar query={query} setQuery={setQuery} onSearch={handleSearch} />
+            <SearchBar query={query} setQuery={setQuery} onSearch={handleSearch} placeholder={"Enter ingredients (e.g., egg,tomato,basil)"} />
             <div className="max-time-container">
                 <label htmlFor="time-input">In a rush? Set a total cook + prep time ⏱️ (min): </label>
                 <input
