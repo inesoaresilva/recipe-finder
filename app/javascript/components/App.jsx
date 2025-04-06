@@ -76,15 +76,19 @@ const App = () => {
             {loading && <p className="loading">Loading recipes... 🍳</p>}
             
             {recipes?.map((recipe) => (
-                  <details key={recipe.id} className="recipe">
-                  <summary className="recipe-title">
+                <details key={recipe.id} className="recipe">
+                    <summary className="recipe-title">
                     {recipe.title}
-                  </summary>
-                  <p className="recipe-description">
-                    🧑‍🍳 <strong>Prep:</strong> {recipe.prep_time} min &nbsp;&nbsp;
-                    🍲 <strong>Cook:</strong> {recipe.cook_time} min &nbsp;&nbsp;
-                    ⏰ <strong>Total time:</strong> {recipe.cook_time + recipe.prep_time}  min
-                </p>
+                    </summary>
+                    <div className="recipe-description">
+                        <p>
+                        🧑‍🍳 <strong>Prep:</strong> {recipe.prep_time} min &nbsp;&nbsp;
+                        🍲 <strong>Cook:</strong> {recipe.cook_time} min &nbsp;&nbsp;
+                        ⏰ <strong>Total time:</strong> {recipe.cook_time + recipe.prep_time}  min
+                        </p>
+                        <p>Matched {recipe.match_count} times your searched ingredients </p>
+                    </div>
+               
                   <ul className="ingredients-list">
                     {recipe.ingredients.map((ingredient) => (
                       <li key={ingredient.id}>{ingredient.name}</li>
