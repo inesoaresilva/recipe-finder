@@ -10,15 +10,16 @@ const SearchBar = ({query, setQuery, onSearch }) => {
   };
 
   return (
-    <div>
+    <div className='search-container'>
       <input
+        className='search-input'
         type="text"
         value={query}
         onChange={(e) => setQuery(e.target.value)}
         placeholder="Enter ingredients (e.g., egg, tomato, basil)"
         onKeyDown={(e) => e.key === "Enter" && handleSearch()}
       />
-      <button onClick={handleSearch}>Search</button>
+      <button className='search-button' onClick={handleSearch}>Search</button>
     </div>
   );
 };
