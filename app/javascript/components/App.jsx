@@ -30,8 +30,6 @@ const App = () => {
 
             const newRecipes = Object.values(data).flat();
 
-            console.log("Fetched recipes:", newRecipes);
-
             setRecipes((prevRecipes) => reset ? newRecipes : [...prevRecipes, ...newRecipes]);
         } catch (error) {
             console.error("Error fetching recipes:", error);
