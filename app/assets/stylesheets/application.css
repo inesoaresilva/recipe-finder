@@ -34,6 +34,20 @@ body {
     }
   }
 
+  .loading {
+    text-align: center;
+    font-size: 1.2rem;
+    color: #6b7280;
+    margin-top: 1rem;
+    animation: pulse 1.5s infinite;
+  }
+  
+  @keyframes pulse {
+    0% { opacity: 0.3; }
+    50% { opacity: 1; }
+    100% { opacity: 0.3; }
+  }
+
   .search-container {
     display: flex;
     justify-content: center;

@@ -5,6 +5,8 @@ const App = () => {
     const [recipes, setRecipes] = useState([]); 
     const [query, setQuery] = useState(""); 
     const [start, setStart] = useState(0); 
+    const [loading, setLoading] = useState(false);
+
 
     const handleSearch = async (newQuery) => {
         const normalizedQuery = newQuery.
@@ -20,6 +22,7 @@ const App = () => {
 
     const fetchRecipes = async (query, start, reset = false) => {
         try {
+            setLoading(true);
             const response = await fetch(`/recipes/search?ingredients=${encodeURIComponent(query)}&start=${start}`);
             if (!response.ok) throw new Error("Failed to fetch");
 
@@ -32,7 +35,9 @@ const App = () => {
             setRecipes((prevRecipes) => reset ? newRecipes : [...prevRecipes, ...newRecipes]);
         } catch (error) {
             console.error("Error fetching recipes:", error);
-        }
+        } finally { 
+            setLoading(false);
+        } 
     };
 
     const loadMore = () => {
@@ -46,7 +51,7 @@ const App = () => {
             <h1 className="title">👩‍🍳 What’s on the menu today? 🍝 </h1>
             <h2 className="subtitle">Find Your Recipe 🔍</h2>
             <SearchBar query={query} setQuery={setQuery} onSearch={handleSearch} />
-            
+            {loading && <p className="loading">Loading recipes... 🍳</p>}
             <ul>
                 {recipes.map((recipe) => (
                     <li key={recipe.id}>
