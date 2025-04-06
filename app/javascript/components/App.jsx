@@ -6,6 +6,7 @@ const App = () => {
     const [query, setQuery] = useState(""); 
     const [start, setStart] = useState(0); 
     const [loading, setLoading] = useState(false);
+    const [maxTime, setMaxTime] = useState("");
 
 
     const handleSearch = async (newQuery) => {
@@ -20,10 +21,20 @@ const App = () => {
         fetchRecipes(newQuery, 0, true);  
     };
 
-    const fetchRecipes = async (query, start, reset = false) => {
+    const fetchRecipes = async (query, start, reset = false, limitTime = maxTime) => {
+    
         try {
             setLoading(true);
-            const response = await fetch(`/recipes/search?ingredients=${encodeURIComponent(query)}&start=${start}`);
+            const params = new URLSearchParams();
+            params.append("ingredients", query);
+            params.append("start", start);
+            if (limitTime) {
+                params.append("max_time", limitTime);
+            }
+
+            console.log(params.toString());
+            const response = await fetch(`/recipes/search?${params.toString()}`);
+
             if (!response.ok) throw new Error("Failed to fetch");
 
             const data = await response.json();
@@ -49,16 +60,30 @@ const App = () => {
             <h1 className="title">👩‍🍳 What’s on the menu today? 🍝 </h1>
             <h2 className="subtitle">Find Your Recipe 🔍</h2>
             <SearchBar query={query} setQuery={setQuery} onSearch={handleSearch} />
+            <div className="max-time-container">
+                <label htmlFor="time-input">In a rush? Set a total cook + prep time ⏱️ (min): </label>
+                <input
+                    className="max-time-input"
+                    id="time-input"
+                    type="number"
+                    value={maxTime}
+                    onChange={(e) => setMaxTime(e.target.value)}
+                    placeholder="e.g. 30"
+                    min="1"
+                />
+            </div>
+
             {loading && <p className="loading">Loading recipes... 🍳</p>}
             
-            {recipes.map((recipe) => (
+            {recipes?.map((recipe) => (
                   <details key={recipe.id} className="recipe">
                   <summary className="recipe-title">
                     {recipe.title}
                   </summary>
                   <p className="recipe-description">
                     🧑‍🍳 <strong>Prep:</strong> {recipe.prep_time} min &nbsp;&nbsp;
-                    🍲 <strong>Cook:</strong> {recipe.cook_time} min
+                    🍲 <strong>Cook:</strong> {recipe.cook_time} min &nbsp;&nbsp;
+                    ⏰ <strong>Total time:</strong> {recipe.cook_time + recipe.prep_time}  min
                 </p>
                   <ul className="ingredients-list">
                     {recipe.ingredients.map((ingredient) => (
