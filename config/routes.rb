@@ -1,6 +1,10 @@
 Rails.application.routes.draw do
   root "recipes#index"
 
+  if Rails.env.production?
+    get "import/recipes", to: "import#recipes"
+  end
+
   resources :recipes do
     collection do
       get "search"
