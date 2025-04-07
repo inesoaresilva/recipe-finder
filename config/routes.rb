@@ -3,6 +3,7 @@ Rails.application.routes.draw do
 
   if Rails.env.production?
     get "import/recipes", to: "import#recipes"
+    get "/import/ingredient_count", to: "import#ingredient_count"
   end
 
   resources :recipes do

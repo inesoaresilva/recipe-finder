@@ -1,4 +1,9 @@
 class ImportController < ApplicationController
+    def ingredient_count
+        count = Ingredient.count
+        render plain: "Total ingredients: #{count}"
+      end
+      
     def recipes
         require "json"
         require "set"
