@@ -29,7 +29,7 @@
     "prop-types": "^15.8.1",
     "react": "^19.1.0",
     "react-dom": "^19.1.0",
-    "react-on-rails": "^14.2.0",
+    "react-on-rails": "14.2.0",
     "shakapacker": "8.2.0",
     "style-loader": "^4.0.0",
     "terser-webpack-plugin": "^5.3.14",

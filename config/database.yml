@@ -81,6 +81,7 @@ test:
 production:
   primary: &primary_production
     <<: *default
+    url: <%= ENV["DATABASE_URL"] %>
     database: recipe_finder_production
     username: recipe_finder
     password: <%= ENV["RECIPE_FINDER_DATABASE_PASSWORD"] %>
