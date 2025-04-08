@@ -55,7 +55,9 @@ const App = () => {
 
     return (
         <div>
-            <h1 className="title">👩‍🍳 What’s on the menu today? 🍝 </h1>
+            <h1 className="title">
+                <a className="title-link" href="/">👩‍🍳 What’s on the menu today? 🍝 </a>
+            </h1>
             <h2 className="subtitle">Find Your Recipe 🔍</h2>
             <SearchBar query={query} setQuery={setQuery} onSearch={handleSearch} placeholder={"Enter ingredients (e.g., egg,tomato,basil)"} />
             <div className="max-time-container">
