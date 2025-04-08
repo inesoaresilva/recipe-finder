@@ -6,6 +6,7 @@ const App = () => {
     const [query, setQuery] = useState(""); 
     const [start, setStart] = useState(0); 
     const [loading, setLoading] = useState(false);
+    const [loadingMore, setLoadingMore] = useState(false);
     const [maxTime, setMaxTime] = useState("");
 
 
@@ -41,10 +42,12 @@ const App = () => {
             console.error("Error fetching recipes:", error);
         } finally { 
             setLoading(false);
+            setLoadingMore(false);
         } 
     };
 
     const loadMore = () => {
+        setLoadingMore(true);
         const nextStart = start + 100;
         setStart(nextStart);
         fetchRecipes(query, nextStart); 
@@ -91,7 +94,9 @@ const App = () => {
                   </ul>
                 </details> ))}
             {recipes.length > 0 && (
-                <button className="load-button" onClick={loadMore}>Load More</button>
+                <button disabled={loadingMore} className={`load-button ${loadingMore ? "loading" : ""}`} onClick={loadMore}>
+                   {loadingMore ? <span className="spinner">🔄</span> : "Load more"}
+                </button>
             )}
         </div>
     );

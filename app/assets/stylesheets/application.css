@@ -140,6 +140,7 @@ body {
   }
   
   .load-button {
+    min-width: 150px;
     background-color: #6366f1;
     font-size: 1rem;
     color: white;
