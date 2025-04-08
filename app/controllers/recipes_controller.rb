@@ -5,11 +5,24 @@ class RecipesController < ApplicationController
 
   def search
     if params[:ingredients].present?
-      searched_ingredients = params[:ingredients].split(",").map(&:strip).reject(&:blank?).map(&:downcase)
+      searched_ingredients = params[:ingredients]
+      .split(",")
+      .map(&:strip)
+      .reject(&:blank?)
+      .map(&:downcase)
 
-      matched_ingredients = searched_ingredients.flat_map do |ingredient_name|
-        Ingredient.search_by_name(ingredient_name)
-      end.uniq
+      ingredient_query = searched_ingredients.map { "name ILIKE ?" }.join(" OR ")
+      ingredient_values = searched_ingredients.map { |term| "%#{term}%" }
+
+      matched_ingredients = Ingredient
+        .where(ingredient_query, *ingredient_values)
+        .pluck(:id)
+
+      if matched_ingredients.empty?
+        matched_ingredients = searched_ingredients.flat_map do |term|
+          Ingredient.search_by_name(term).pluck(:id)
+        end.uniq
+      end
 
       return render json: [] if matched_ingredients.empty?
 
@@ -30,7 +43,7 @@ class RecipesController < ApplicationController
       )
       end
 
-      recipe_matches = recipe_matches.offset(start).limit(per_page)
+      recipe_matches = recipe_matches.distinct.offset(start).limit(per_page)
 
       render json: recipe_matches, include: :ingredients
     else
