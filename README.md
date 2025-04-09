@@ -9,6 +9,23 @@ A simple web app that helps users find recipes based on the ingredients they hav
 - 📊 Results are ranked by how many distinct searched ingredients each recipe contains
 - 🔄 "Load more" button to fetch additional results with pagination
 
+## 🚀 Deployment
+This application is deployed using Render, a cloud platform for web apps and databases.
+
+### 🌐 Live App
+You can check out the live version here: https://recipe-finder-x28y.onrender.com/
+
+### ⚠️ Limitations of Free Render Plan
+I'm currently using Render's free tier, which comes with a few limitations:
+
+- **Cold Starts**: The server spins down after 15 minutes of inactivity, which causes a **delay** (10-30 seconds) on the **first** **request**.
+  - During this time:
+    You might see a "Application Error" or "Site can't be reached". The link may appear broken before finally working.
+- **Database Wakeup**: Since I'm also using the free PostgreSQL database on Render too, that **service** also goes to **sleep**. On the **first access**, the **web app may be ready before the database is**, causing timeouts or internal server errors on first access.
+- **Limited Resources**: The free web service has restricted RAM and CPU, which can lead to slower performance under load.
+
+
+
 ## 🛠️ Tech Stack
 
 - **Backend:** Ruby on Rails 8 (API mode), PostgreSQL
