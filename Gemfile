@@ -64,6 +64,6 @@ end
 
 gem "shakapacker", "= 8.2"
 
-gem "react_on_rails", "= 14.2.0"
+gem "react_on_rails", "14.2.1"
 
 gem "pg_search", "~> 2.3"
