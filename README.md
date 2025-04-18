@@ -62,19 +62,40 @@ asdf reshim ruby
 ```
 > **Note:** Make sure your project path does not contain emojis or special characters — Ruby's native extensions may fail to compile.
 
-### 3. Install PostgreSQL client (for `pg` gem)
+### 3. Install PostgreSQL locally (for development)
+
+This project uses PostgreSQL as its database. You'll need the server running locally before setting up the app.
+
+```bash
+brew install postgresql@15
+brew link --force --overwrite postgresql@15
+brew services start postgresql@15
+```
+
+### 4. Install PostgreSQL client (for `pg` gem)
 ```bash
 brew install libpq
 brew link --force libpq
 ```
 
-### 4. Install dependencies
+### 5. Install dependencies
 ```bash 
     bundle install
     npm install
 ```
 
-### 5. Set up the database and import recipes
+### 6. Set up the database and import recipes
+> 💡 **Note:** Most Rails commands should be run with `bundle exec` to make sure you’re using the correct version of Rails and gems defined in this project.
+>
+> For example:
+> ```bash
+> bundle exec rails db:create
+> bundle exec rails db:migrate
+> bundle exec rails recipes:import
+> ```
+>
+> If you run `rails` directly and see errors like “Rails is not installed,” it's because you haven’t installed Rails globally — and that's okay! Just use `bundle exec`.
+
 ```bash 
     rails db:create
     rails db:migrate
@@ -82,12 +103,22 @@ brew link --force libpq
 
 Then run the custom rake task to import recipes:
 ```bash 
-    rails recipes:import
+    rails import:recipes
 ```
 
 💡 This task reads from a JSON file (`db/seeds/recipes-en.json`) and populates the database with recipes and their ingredients.
 
-### 6. Start the server 
-```bash 
-    bin/dev
+### 7. Start the app (with Foreman)
+
+This project uses a `Procfile.dev` to run the app and JS bundler together in development.
+
+Install Foreman:
+
+```bash
+brew install foreman
+````
+
+Then, run the app 🚀
+```bash
+bin/dev
 ```
