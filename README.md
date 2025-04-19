@@ -24,13 +24,21 @@ I'm currently using Render's free tier, which comes with a few limitations:
 - **Database Wakeup**: Since I'm also using the free PostgreSQL database on Render, that **service** also goes to **sleep**. On the **first access**, the **web app may be ready before the database is**, causing timeouts or internal server errors on first access.
 - **Limited Resources**: The free web service has restricted RAM and CPU, which can lead to slower performance under load.
 
-
-
 ## 🛠️ Tech Stack
 
 - **Backend:** Ruby on Rails 8 (API mode), PostgreSQL
 - **Frontend:** React (with React on Rails integration)
 - **Styling:** Plain CSS (no Tailwind)
+
+___
+
+## 🔮 Next Steps
+- **Unify search logic:** Replace current ILIKE + fallback structure with a single, consistent search using `pg_search` with both `tsearch` and `trigram` strategies. This will simplify the code and reduce branching logic. 
+  - **Improve typo tolerance:** Enable `triagram` similarity to catch common misspellings (e.g., "cinamon" -> "cinnamon").
+  - **Prefix + fuzzy matching:** Use prefix: true in `tsearch` so partial inputs like 'sug' or 'tomat' still return relevant results without relying on ILIKE.
+  - **Performance optimization:** Leverage full-text search indexes consistently and remove unnecessary queries in the fallback.
+- **Remove unnecessary abstraction:** Drop the unused `pg_search_scope` definitions from the `Ingredient` and `Recipe` models, since all full-text search is handled directly in the controller to support OR logic.
+
 
 ## 📦 Setup Instructions
 
