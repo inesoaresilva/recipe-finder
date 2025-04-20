@@ -4,6 +4,7 @@ Rails.application.routes.draw do
   if Rails.env.production?
     get "import/recipes", to: "import#recipes"
     get "/import/ingredient_count", to: "import#ingredient_count"
+    get "/debug/duplicate-recipes", to: "debug#duplicate_recipes"
   end
 
   resources :recipes do
