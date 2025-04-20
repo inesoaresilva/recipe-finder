@@ -5,6 +5,7 @@ Rails.application.routes.draw do
     get "import/recipes", to: "import#recipes"
     get "/import/ingredient_count", to: "import#ingredient_count"
     get "/debug/duplicate-recipes", to: "debug#duplicate_recipes"
+    get "/debug/cleanup-duplicate-recipes", to: "debug#cleanup_duplicate_recipes"
   end
 
   resources :recipes do
