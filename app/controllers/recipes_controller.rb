@@ -27,7 +27,7 @@ class RecipesController < ApplicationController
       return render json: [] if matched_ingredients.empty?
 
       start = params[:start].to_i
-      per_page = 10
+      per_page = params[:per_page]&.to_i || 10
 
       recipe_matches = Recipe
       .joins(:ingredients)

@@ -8,6 +8,7 @@ const App = () => {
     const [loading, setLoading] = useState(false);
     const [loadingMore, setLoadingMore] = useState(false);
     const [maxTime, setMaxTime] = useState("");
+    const PAGE_SIZE = 10;
 
 
     const handleSearch = async (newQuery) => {
@@ -24,6 +25,7 @@ const App = () => {
             const params = new URLSearchParams();
             params.append("ingredients", query);
             params.append("start", start);
+            params.append("per_page", PAGE_SIZE);
             if (limitTime) {
                 params.append("max_time", limitTime);
             }
@@ -48,7 +50,7 @@ const App = () => {
 
     const loadMore = () => {
         setLoadingMore(true);
-        const nextStart = start + 100;
+        const nextStart = start + PAGE_SIZE;
         setStart(nextStart);
         fetchRecipes(query, nextStart); 
     };
